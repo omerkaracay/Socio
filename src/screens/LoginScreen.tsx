@@ -5,13 +5,25 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-import {COLORS} from '../assets/theme/colors';
-import {FontSizes} from '../assets/theme/fontSizes';
+import {COLORS} from '../values/colors';
+import {FontSizes} from '../values/fontSizes';
+import { LoginContext } from '../contexts/LoginContexts';
 
 export default function LoginScreen() {
+  let { setIsLogin } = useContext(LoginContext)
+
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+
+
+
+  function LoginCheck (){
+    setIsLogin(true)
+  }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.primary}}>
       {/* LOGO */}
@@ -33,7 +45,9 @@ export default function LoginScreen() {
       {/* Login Inputs */}
       <View style={{flex: 1, alignItems: 'center', gap: 10}}>
         <TextInput
-          placeholder="Username"
+          placeholder="Kullanıcı Adı"
+          value={username}
+          onChangeText={setUsername}
           style={{
             backgroundColor: COLORS.white,
             width: hp('30%'),
@@ -43,7 +57,9 @@ export default function LoginScreen() {
         />
         <TextInput
           secureTextEntry={true}
-          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Şifre"
           style={{
             backgroundColor: COLORS.white,
             width: hp('30%'),
@@ -53,7 +69,7 @@ export default function LoginScreen() {
         />
 
         {/* Login Buttons */}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={LoginCheck}>
           <Text
             style={{
               fontSize: FontSizes.h3,
